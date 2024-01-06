@@ -1,0 +1,91 @@
+Design 21 game. 21 is light version of BlackJack.
+21 is played between a player and a dealer. They compete against each other with deck of randomly shuffled cards
+At the start of each round, player and the dealer is given 2 cards. The one with most highest value cards wins.
+But they can only see value of 1 card the opposing player holds, the others are hidden.
+They must choose to either stay or hit. Stay means that they will not pick up a random card from deck. Hit means they will
+pick up another card from deck and potentially go bust. Bust means the value of cards someone holds exceeds 21. 
+They can keep picking up cards from the deck to increase value of their card. But they face a chance that might end up 
+losing them the game. Once both players has decided to stay and none of them has busted, their cards are revealed
+and the one with the highest value wins.
+
+How are card values calculated?
+There are 4 suits of cards with 13 different card per suit. Suits are Hearts, Diamonds, Clubs, and Spades.
+Suits do not give value to the card. It's so that there can be values that are occur more than once.
+Numbered cards, that range from 2 to 10 have their face value, meaning value of Diamond 2 is 2 and Spade 8 is 8.
+Jacks, Queens, and Kings all have the same value of 10.
+Aces however, work little differently. They can have the value of 11 or 1. When ace is drawn, value 11 is added to someone's cards.
+As the result of 11 being added makes that person go bust. Then ace has value of 1. 
+
+What if there is a draw?
+Draw is potentially possible. This results in both players winning. 
+
+Rules
+The player always goes first. First to decide either to stay or hit.
+The dealer will always stay if their cards values is 17 to higher.
+
+Flow of the game
+The game starts with a deck of 4 x 13 cards. 9 numbered, 3 special and 1 ace.
+A round of the game starts and both players pick up 2 cards from the deck. 
+The first card they pick up is always revealed to the other. 
+Knowing the value of your cards and value of one of dealers card.
+You can decide to either hit or stay. 
+If you hit and land on a card that makes value of your cards go over 21. Then you have busted and lost the round.
+If you hit and land on a card that doesn't make value of your cards go over 21, Then it's the dealers turn.
+if you stay, then it's the dealers turn
+The dealer faces the same dilemma you did. If they stay and you have also stayed. Values of cards are compared
+and the highest value cards are winner of the round. 
+If they hit and you have stayed, they can keep hitting until they stay or go bust. Same goes for you.
+If the dealer stayed, you can keep hitting. 
+However, If both parties are hitting, they must give each other turns.
+Once the winner of the round has been concluded. The cards used should not be put into existing deck.
+The game goes on until there are no cards left. Someone has to stay if there are no cards to pick up.
+
+Data structure
+1. Pack of 52 cards must be generated. This should be an object with the keys being the order they can be picked up from. e.g key 1, 2, 3, 4 being 
+the first cards to be picked up when round starts. 
+- This object can be generated randomly by using a template of available cards. 
+
+2. A counter that can range from 1 to 52 to keep order of which cards are already used, being used and to use. Anytime a new cards are picked up 
+from the deck, this counter must be adjusted accordingly. 
+
+3. An object that holds parties current cards for that round. Maybe an array instead?
+
+Functions
+Deck generator
+- A new deck must be generated every game with template of available cards.
+
+Round starter. 
+- Using deck. Add 2 cards to both parties current card object
+
+User Prompter. If party stayed, don't use
+- Use display situation. 
+-- Prompt to either hit or stay. 
+-- If hit, use hit a card
+-- if stay, change parties status to stayed.
+
+Computer Prompter. if party stayed, don't use
+- If current hand is 17 or above, change parties status to stayed.
+- if current hand is below 17, use hit a card
+
+Hit a card.
+- Using deck, add 1 card to party who used this action
+
+Finalise round.
+- Finalise once both parties has stayed. if so return true. 
+-- Use card value checker for both parties and declare winner
+-- Use round reseter.
+
+Finalise round bust.
+- a party has gone bust. Declare opposing as winner.
+- Use round reseter.
+
+Card value checker.
+- Calculate values of cards of a party. Make sure to keep what ace does in mind.
+-- Treat cards with numbers with their face value and specials as 10.
+-- If the last card the player holds is ace, see if it results in bust and if does treat ace as 1.
+-- If the last card the player holds is ace, see if it results in bust and if no, treat ace as 11.
+- Return values of card 
+
+Round reseter.
+- Clear all the cards both parties hold
+-- Assign both parties hand (array) to new empty array
